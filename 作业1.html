@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #div{
+      position : absolute;
+      left: 0 ;
+      top:  0 ;
+      width: 100px;
+      height: 100px;
+      background: red;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="div"></div>
+  <script>
+    var odiv = document.getElementById('div');
+
+    var iwidth = document.documentElement.clientWidth;
+    var iheight = document.documentElement.clientHeight;
+
+    var onoff = false;
+    var x = 0;
+    var y = 0;
+
+    odiv.onmousedown = function (ev) {
+      var event = ev ||window.event;
+
+      onoff = true;
+
+      x = event.clientX - odiv.offsetLeft;
+      y = event.clientY - odiv.offsetTop;
+    }
+
+    document.onmousemove = function (ev) {
+      var event = ev || window.event;
+
+      if (!onoff) {
+        return;
+      }
+
+      var ileft = event.clientX - x;
+      var itop = event.clientY - y;
+
+      if(ileft < 50){
+        ileft = 0;
+      }
+      if(itop < 50){
+        itop = 0;
+      }
+
+      if (ileft >= iwidth - odiv.offsetWidth - 50) {
+         ileft = iwidth - odiv.offsetWidth;
+      }
+
+      if (itop >= iheight - odiv.offsetHeight - 50) {
+        itop = iheight - odiv.offsetHeight;
+      }
+
+      odiv.style.left = ileft + 'px';
+      odiv.style.top = itop + 'px';
+    }
+
+    document.onmouseup = function () {
+      onoff = false;
+    }
+  </script>
+</body>
+</html>
